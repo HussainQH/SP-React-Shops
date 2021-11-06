@@ -1,17 +1,17 @@
-import Card from "./ProductCard";
+import ProductCard from "./ProductCard";
 import { useState } from "react";
 import ProductModal from "./ProductModal";
 import { observer } from "mobx-react";
 import { Form, Row, Stack } from "react-bootstrap";
 
-function ProductList({ products }) {
+function ProductList({ products, shopId }) {
   const [query, setQuery] = useState("");
 
   const productList = products
     .filter((product) =>
       product.name.toLowerCase().includes(query.toLowerCase())
     )
-    .map((product) => <Card key={product._id} product={product} />);
+    .map((product) => <ProductCard key={product._id} product={product} />);
 
   return (
     <div>
@@ -22,7 +22,7 @@ function ProductList({ products }) {
           placeholder="Search for product by name"
           onChange={(event) => setQuery(event.target.value)}
         />
-        <ProductModal />
+        <ProductModal shopId={shopId} />
       </Stack>
 
       <Row>{productList}</Row>
